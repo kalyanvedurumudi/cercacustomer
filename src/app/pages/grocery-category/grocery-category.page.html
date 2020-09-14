@@ -1,0 +1,27 @@
+<ion-header no-border>
+
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home" icon="ios-arrow-back" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>SubCategory</ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon src="../../../assets/icon-image/cart_ic.svg">
+        </ion-icon>
+      </ion-button>
+
+    </ion-buttons> -->
+  </ion-toolbar>
+
+  
+</ion-header>
+
+<ion-content>
+  <div class="store_div">
+    <div class="product_div" *ngFor="let item of category" (click)="categoryDetail(item?.id)">
+      <img src="../../../assets/image/invite.png">
+      <h3 class="name">{{item?.name}}</h3>
+    </div>
+  </div>
+</ion-content>

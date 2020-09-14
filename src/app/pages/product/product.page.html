@@ -1,0 +1,54 @@
+<ion-header no-border>
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home" icon="ios-arrow-back" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{"store_detail.product" | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cart()">
+        <ion-icon src="../../../assets/icon-image/cart_ic.svg"> </ion-icon>
+      </ion-button>
+      <ion-button (click)="presentPopover($event)">
+        <ion-icon src="../../../assets/icon-image/equalizer.svg"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="store_div">
+    <div class="product_div" *ngFor="let item of Store">
+      <div class="img_div" (click)="storeDetail(item)">
+        <img [src]="item?.mainImage?.mediumUrl" />
+      </div>
+      <h3 class="name">
+        {{item?.name |slice:0:20}}
+        <span *ngIf="item?.name?.length >20">..</span>
+      </h3>
+      <h3 class="name">
+        {{item?.shop.name |slice:0:20}}
+        <span *ngIf="item?.name?.length >20">..</span>
+      </h3>
+      <p class="price">
+          {{item?.currency}}  {{item?.salePrice}}  <s> {{item?.currency}}  {{item?.price}} </s>
+             
+        </p>
+      <div class="btn_div">
+        <div class="qty_div">
+          <ion-button class="add_btn trans-btn" (click)="remove(item)">
+            <ion-icon src="../../../assets/icon-image/minus-sign.svg">
+            </ion-icon>
+          </ion-button>
+          <p class="qty_p">
+            {{item?.qty}}
+          </p>
+          <ion-button class="add_btn trans-btn" (click)="AddCart(item)">
+            <ion-icon src="../../../assets/icon-image/plus-signs.svg">
+            </ion-icon>
+          </ion-button>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+</ion-content>
