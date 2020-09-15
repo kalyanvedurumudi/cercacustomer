@@ -19,40 +19,30 @@
         <p class="main_heading" *ngIf="count > 0">{{"order_history_page.current_order" | translate}}</p>
         <div class="card_div" *ngFor="let item of data">
             <ion-item lines="none" (click)="orderDetail(item.id)">
-
-                <img [src]="item.shop.imagePath +item.shop.image" />
+                
+                <img *ngIf="data?.details && data?.details.length > 0" [src]="item.details[0].productDetails.mainImage" />
                 <ion-label>
-                    <h3 class="name">{{item?.shop?.name}} <span class="status" *ngIf="item?.order_status=='DriverApproved' || item?.order_status=='Approved' || item?.order_status=='Prepare'">
-              {{"order_history_page.restaurant_accepted" | translate}}</span>
-                        <span class="status" *ngIf="item?.order_status=='DriverAtShop' || item?.order_status=='PickUpFood' || item?.order_status=='OnTheWay' || item?.order_status=='DriverReach'">{{"order_history_page.on_the_way" | translate}}</span>
-                        <span class="status" *ngIf=" item?.order_status=='Pending'">{{item?.order_status}}</span>
-                        <span class="status" *ngIf=" item?.order_status=='Delivered'">{{item?.order_status}}</span>
-                        <span class="status" *ngIf=" item?.order_status=='Cancel'">{{item?.order_status}}</span>
-
+                    <h3 class="name"> {{item.trackingCode}}
+                        <span class="label label-success" *ngIf="item.paymentMethod === 'cybersource'">Bank Card</span>
+                        <span class="label label-success" *ngIf="item.paymentMethod === 'stripe'">Stripe</span>
+                        <span class="label label-success" *ngIf="item.paymentMethod === 'paypal'">Paypal</span>
+                        <span class="label label-success" *ngIf="item.paymentMethod === 'cod'">COD</span>
                     </h3>
-                    <p class="address">{{item?.shop?.address}}</p>
+                    <p class="address">{{item?.status}}</p>
                 </ion-label>
 
             </ion-item>
 
             <ion-label>
-                <h3 class="menu">{{"order_history_page.items" | translate}} <span class="ion-float-right">{{item?.order_no}}</span></h3>
-                <p class="order" *ngFor="let item of item.orderItems">
-                    {{item?.quantity}} x {{item?.itemName}} {{item?.packageName}}
-                </p>
+                <h3 class="menu">{{"order_history_page.items" | translate}} <span class="ion-float-right">{{item.totalProducts}}</span></h3>
             </ion-label>
             <ion-label>
-                <h3 class="menu">{{"order_history_page.ordered_on" | translate}}</h3>
-                <p class="order">{{item?.date |date:' d MMM y'}} {{item?.time}}</p>
+                <h3 class="menu">{{"order_history_page.ordered_on" | translate}} <span class="ion-float-right">{{item.createdAt | date:'short'}}</span></h3>
             </ion-label>
             <ion-label>
-                <h3 class="menu">{{"order_history_page.total_amount" | translate}}</h3>
-                <ion-button class="trans-btn ion-float-right order_btn ion-text-capitalize" (click)="presentAlert(item.id)">
-                    {{"order_history_page.cancel_order" | translate}}
-                </ion-button>
-                <p class="order">{{currency}}{{item?.payment}}</p>
+                <h3 class="menu">{{"order_history_page.total_amount" | translate}} <span class="ion-float-right">{{item.userTotalPrice | currency:"USD "}}</span></h3>
             </ion-label>
         </div>
-        
+
     </div>
 </ion-content>

@@ -26,7 +26,7 @@ export class OrderHistoryPage implements OnInit {
     this.currency = this.api.currency;
     this.util.startLoad();
     this.api.getDataWithToken('orders').subscribe((res: any) => {
-      if (res.success) {
+      if (res) {
         this.data = res.data.items;
         this.count = res.data.count;
         this.util.dismissLoader();
@@ -34,7 +34,7 @@ export class OrderHistoryPage implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   back() {
     this.ntrl.back();
