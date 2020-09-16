@@ -1,28 +1,28 @@
-import { GrocerySuccessPage } from "./../grocery-success/grocery-success.page";
-import { SuccessModalPage } from "./../success-modal/success-modal.page";
-import { ModalController } from "@ionic/angular";
-import { GroceryService } from "./../../service/grocery.service";
-import { UtilService } from "./../../service/util.service";
-import { ApiService } from "./../../service/api.service";
-import { Component, OnInit } from "@angular/core";
+import { GrocerySuccessPage } from './../grocery-success/grocery-success.page';
+import { SuccessModalPage } from './../success-modal/success-modal.page';
+import { ModalController } from '@ionic/angular';
+import { GroceryService } from './../../service/grocery.service';
+import { UtilService } from './../../service/util.service';
+import { ApiService } from './../../service/api.service';
+import { Component, OnInit } from '@angular/core';
 import {
   PayPal,
   PayPalPayment,
   PayPalConfiguration,
-} from "@ionic-native/paypal/ngx";
+} from '@ionic-native/paypal/ngx';
 declare var RazorpayCheckout: any;
 @Component({
-  selector: "app-pay-method",
-  templateUrl: "./pay-method.page.html",
-  styleUrls: ["./pay-method.page.scss"],
+  selector: 'app-pay-method',
+  templateUrl: './pay-method.page.html',
+  styleUrls: ['./pay-method.page.scss'],
 })
 export class PayMethodPage implements OnInit {
   currencyType: any;
   data: any = {};
-  online = 1;
-  cash = 0;
+  online = 0;
+  cash = 1;
   err: any;
-  payment_type: any = "LOCAL";
+  payment_type: any = 'LOCAL';
   apdata: any = {};
   constructor(
     private api: ApiService,
@@ -35,20 +35,18 @@ export class PayMethodPage implements OnInit {
 
     this.currencyType = this.api.currencyType;
 
-    this.util.startLoad();
-    this.api.getDataWithToken("keySetting").subscribe((res: any) => {
-      if (res.success) {
-        this.data = res.data;
-        this.util.dismissLoader();
-      }
-    });
+    // this.util.startLoad();
+    // this.api.getDataWithToken('keySetting').subscribe((res: any) => {
+    //   if (res.success) {
+    //     this.data = res.data;
+    //     this.util.dismissLoader();
+    //   }
+    // });
   }
 
   ngOnInit() {}
   paymentMethod() {
-    /* 
-    return */
-    let rdata: any = {};
+    const rdata: any = {};
     rdata.items = [];
     rdata.itemData = [];
     rdata.shop_id = this.gpi.storeID;
@@ -56,18 +54,18 @@ export class PayMethodPage implements OnInit {
     rdata.discount = this.gpi.info.discount;
     rdata.delivery_charge = this.gpi.info.delivery_charge;
     rdata.delivery_type = this.gpi.info.delivery_type;
-    if (this.gpi.promocode == undefined) {
+    if (this.gpi.promocode === undefined) {
     } else {
       rdata.coupon_id = this.gpi.promocode.id;
     }
     rdata.coupon_price = this.gpi.info.discount;
 
-    if (typeof this.data.items == "string") {
+    if (typeof this.data.items === 'string') {
       rdata.items = [];
     }
     this.gpi.cartData.forEach((element) => {
       rdata.items.push(element.id);
-      let pusher: any = {
+      const pusher: any = {
         item_id: element.id,
         price: element.total * element.qty,
         quantity: element.qty,
@@ -77,11 +75,11 @@ export class PayMethodPage implements OnInit {
     rdata.items = rdata.items.join();
 
     if (this.online) {
-      if (this.payment_type == "RAZOR") {
+      if (this.payment_type === 'RAZOR') {
         this.payWithRazor(rdata);
       } else {
-        if (this.currencyType == "INR") {
-          this.util.presentToast("payment not possible");
+        if (this.currencyType === 'INR') {
+          this.util.presentToast('payment not possible');
         } else {
           this.paypalPay(rdata);
         }
@@ -90,7 +88,7 @@ export class PayMethodPage implements OnInit {
       rdata.payment_status = 0;
       rdata.payment_type = this.payment_type;
       this.util.startLoad();
-      this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
+      this.api.postDataWithToken('createGroceryOrder', rdata).subscribe(
         (res: any) => {
           if (res.success) {
             this.util.dismissLoader();
@@ -106,21 +104,22 @@ export class PayMethodPage implements OnInit {
       );
     }
   }
+
   payWithRazor(rdata) {
     var options = {
-      description: "Credits towards consultation",
-      image: "http://placehold.it/96x96.png",
+      description: 'Credits towards consultation',
+      image: 'http://placehold.it/96x96.png',
       currency: this.currencyType,
       key: this.data.razorPublishKey,
       amount: this.gpi.info.toPay * 100,
-      name: "Foodlands",
+      name: 'Foodlands',
 
       theme: {
-        color: "#94b92d",
+        color: '#94b92d',
       },
       modal: {
         ondismiss: function () {
-          alert("dismissed");
+          alert('dismissed');
         },
       },
     };
@@ -128,9 +127,9 @@ export class PayMethodPage implements OnInit {
     var successCallback = (payment_id) => {
       rdata.payment_token = payment_id;
       rdata.payment_status = 1;
-      rdata.payment_type = "RAZOR";
+      rdata.payment_type = 'RAZOR';
       this.util.startLoad();
-      this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
+      this.api.postDataWithToken('createGroceryOrder', rdata).subscribe(
         (res: any) => {
           if (res.success) {
             this.util.dismissLoader();
@@ -147,7 +146,7 @@ export class PayMethodPage implements OnInit {
     };
 
     var cancelCallback = function (error) {
-      alert(error.description + " (Error " + error.code + ")");
+      alert(error.description + ' (Error ' + error.code + ')');
     };
 
     RazorpayCheckout.open(options, successCallback, cancelCallback);
@@ -164,7 +163,7 @@ export class PayMethodPage implements OnInit {
         () => {
           this.payPal
             .prepareToRender(
-              "PayPalEnvironmentSandbox",
+              'PayPalEnvironmentSandbox',
               new PayPalConfiguration({})
             )
             .then(
@@ -172,17 +171,17 @@ export class PayMethodPage implements OnInit {
                 let payment = new PayPalPayment(
                   this.gpi.info.toPay,
                   this.currencyType,
-                  "Description",
-                  "sale"
+                  'Description',
+                  'sale'
                 );
                 this.payPal.renderSinglePaymentUI(payment).then(
                   (result) => {
                     rdata.payment_token = result.response.id;
                     rdata.payment_status = 1;
-                    rdata.payment_type = "PAYPAL";
+                    rdata.payment_type = 'PAYPAL';
                     this.util.startLoad();
                     this.api
-                      .postDataWithToken("createGroceryOrder", rdata)
+                      .postDataWithToken('createGroceryOrder', rdata)
                       .subscribe(
                         (res: any) => {
                           if (res.success) {
@@ -211,7 +210,7 @@ export class PayMethodPage implements OnInit {
     const modal = await this.modalController.create({
       component: GrocerySuccessPage,
       backdropDismiss: false,
-      cssClass: "SuccessModal",
+      cssClass: 'SuccessModal',
     });
     return await modal.present();
   }

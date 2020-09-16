@@ -21,13 +21,13 @@
         <h3 [ngClass]="cash==1 ? 'tittle' : 'cash_heading' ">{{"pay_method.cash" | translate}}</h3>
       </div>
     </div>
-    <div class="online" [ngStyle]="{'background-color':online===1? 'var(--ion-color-green)'
+    <!-- <div class="online" [ngStyle]="{'background-color':online===1? 'var(--ion-color-green)'
     : 'var(--ion-color-white)' }" (click)="online=1 ;cash=0">
       <div class="img_div">
         <img [src]="online==1 ? ' assets/image/online-pay.png' : 'assets/image/credit-cards.png'" />
         <h3 [ngClass]="online==1 ? 'tittle' : 'cash_heading' ">{{"pay_method.online_pay" | translate}}</h3>
       </div>
-    </div>
+    </div> -->
 
   </div>
   <div class="card_div ion-margin-horizontal" *ngIf="online==1">

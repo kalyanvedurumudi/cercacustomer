@@ -73,12 +73,11 @@ export class GroceryCartPage implements OnInit {
 
     this.util.startLoad();
 
-    //this.store = res.data;
     this.charge = parseFloat(this.store.shopDelivery);
-    if (this.store.delivery_type == 'Shop') {
+    if (this.store.delivery_type === 'Shop') {
       this.event = 'pickup';
       this.store.shopDelivery = 0;
-    } else if (this.store.delivery_type == 'Home') {
+    } else if (this.store.delivery_type === 'Home') {
       this.event = 'delivery';
     } else {
       this.event = 'delivery';
@@ -122,12 +121,12 @@ export class GroceryCartPage implements OnInit {
   ngOnInit() { }
   paymentMethod() {
     if (this.data.length) {
-      if (this.event == 'delivery') {
+      if (this.event === 'delivery') {
         this.delivery_type = 'Home';
       } else {
         this.delivery_type = 'Shop';
       }
-      if (this.delivery_type == 'Home') {
+      if (this.delivery_type === 'Home') {
         this.radius = this.distance(
           this.data.userlat,
           this.data.userlang,
@@ -180,7 +179,7 @@ export class GroceryCartPage implements OnInit {
   }
 
   countDiscount() {
-    if (this.gpi.promocode.type == 'amount') {
+    if (this.gpi.promocode.type === 'amount') {
       this.data.discount = this.gpi.promocode.discount;
     } else {
       this.data.discount = this.totalItem * this.gpi.promocode.discount;
@@ -224,8 +223,7 @@ export class GroceryCartPage implements OnInit {
   }
 
   minusQty(item) {
-    let equalIndex;
-    if (item.qty != 1) {
+    if (item.qty !== 1) {
       item.qty--;
       this.totalItem -= item.salePrice;
       this.toPay =
@@ -239,12 +237,12 @@ export class GroceryCartPage implements OnInit {
     } else {
       let equalIndex;
       this.cartData.forEach((element, ind) => {
-        if (element.id == item.id) {
+        if (element.id === item.id) {
           equalIndex = ind;
         }
       });
       if (equalIndex >= 0) {
-        if (item.qty == 0) {
+        if (item.qty === 0) {
           item.qty = 0;
           this.cartData.splice(equalIndex, 1);
           this.totalItem -= item.salePrice;
@@ -277,13 +275,13 @@ export class GroceryCartPage implements OnInit {
     this.nav.navigateForward('/select-address');
   }
   distance(lat1, lon1, lat2, lon2, unit) {
-    if (lat1 == lat2 && lon1 == lon2) {
+    if (lat1 === lat2 && lon1 === lon2) {
       return 0;
     } else {
-      let radlat1 = (Math.PI * lat1) / 180;
-      let radlat2 = (Math.PI * lat2) / 180;
-      let theta = lon1 - lon2;
-      let radtheta = (Math.PI * theta) / 180;
+      const radlat1 = (Math.PI * lat1) / 180;
+      const radlat2 = (Math.PI * lat2) / 180;
+      const theta = lon1 - lon2;
+      const radtheta = (Math.PI * theta) / 180;
       let dist =
         Math.sin(radlat1) * Math.sin(radlat2) +
         Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
@@ -293,17 +291,17 @@ export class GroceryCartPage implements OnInit {
       dist = Math.acos(dist);
       dist = (dist * 180) / Math.PI;
       dist = dist * 60 * 1.1515;
-      if (unit == 'K') {
+      if (unit === 'K') {
         dist = dist * 1.609344;
       }
-      if (unit == 'N') {
+      if (unit === 'N') {
         dist = dist * 0.8684;
       }
       return dist;
     }
   }
   segmentChanged() {
-    if (this.event == 'pickup') {
+    if (this.event === 'pickup') {
       this.store.shopDelivery = 0;
 
       this.toPay =
@@ -335,14 +333,13 @@ export class GroceryCartPage implements OnInit {
       this.data.Deafult_address.area +
       ' ' +
       this.data.Deafult_address.city ;
-    let options: NativeGeocoderOptions = {
+    const options: NativeGeocoderOptions = {
       useLocale: true,
       maxResults: 5,
     };
     this.nativeGeocoder
       .forwardGeocode(this.FindAddress, options)
       .then((result: NativeGeocoderResult[]) => {
-     
         this.agmMap = {
           lat: parseFloat(result[0].latitude),
           lng: parseFloat(result[0].longitude),
