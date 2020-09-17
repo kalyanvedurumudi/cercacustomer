@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title" translate>Verify your phone number</h4>
+  <button type="button" class="close" aria-label="Close" (click)="modalController.dismiss('Cancel')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <input type="text" [(ngModel)]="verifyCode" name="verifyCode" placeholder="Enter your code" class="form-control" />
+  <p class="help help-block" translate>A verify code has been sent to your phone number. Please enter it exactly to the box.</p>
+  <button class="btn btn-success" (click)="confirm()" translate>Confirm</button>&nbsp;
+  <button class="btn btn-warning" (click)="modalController.dismiss('Cancel')" translate>Cancel</button>&nbsp;
+  <button class="btn btn-info" (click)="reSendVerifyNumber()" translate>Resend Code</button>
+</div>

@@ -7,11 +7,16 @@ import { IonicModule } from '@ionic/angular';
 
 import { PayMethodPage } from './pay-method.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { CodVerifyModalComponent } from '../cod-verify-modal/cod-verify-modal.component';
+import { CartResolver } from 'src/app/service/cart.resolver';
 
 const routes: Routes = [
   {
     path: '',
-    component: PayMethodPage
+    component: PayMethodPage,
+    resolve: {
+      cart: CartResolver
+    }
   }
 ];
 
@@ -23,6 +28,8 @@ const routes: Routes = [
     TranslateModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PayMethodPage]
+  declarations: [PayMethodPage, CodVerifyModalComponent],
+  entryComponents: [CodVerifyModalComponent],
+  providers: [CartResolver]
 })
 export class PayMethodPageModule { }

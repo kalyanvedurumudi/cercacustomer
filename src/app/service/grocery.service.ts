@@ -1,7 +1,10 @@
-import { Injectable } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class GroceryService {
   storeID: any;
@@ -11,5 +14,33 @@ export class GroceryService {
   cartData: any = [];
   promocode: any;
   info: any;
-  constructor() {}
+  constructor(private api: ApiService) {}
+
+  checkPhone(phoneNumber: string): Observable<any> {
+    return this.api.postDataWithToken('orders/phone/check', { phoneNumber });
+  }
+
+  checkout(params: any): Observable<any> {
+    return this.api.postDataWithToken('orders', params);
+  }
+
+  cleanCart(): void {
+    this.info = [];
+    localStorage.setItem('store-detail', JSON.stringify([]));
+  }
+
+  calculate(): Promise<any> {
+      if (!this.info || !this.info.length) {
+        return Promise.resolve({
+          products: []
+        });
+      }
+      return this.api.postDataWithToken('cart/calculate', {
+        products: this.info.map(product => {
+          return {
+            productId: product.id, productVariantId: null, quantity: product.qty
+          };
+        }),
+      }).toPromise();
+  }
 }

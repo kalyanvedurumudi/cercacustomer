@@ -1,10 +1,10 @@
-import { ModalController, NavController } from "@ionic/angular";
-import { Component, OnInit } from "@angular/core";
+import { ModalController, NavController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: "app-grocery-success",
-  templateUrl: "./grocery-success.page.html",
-  styleUrls: ["./grocery-success.page.scss"],
+  selector: 'app-grocery-success',
+  templateUrl: './grocery-success.page.html',
+  styleUrls: ['./grocery-success.page.scss'],
 })
 export class GrocerySuccessPage implements OnInit {
   constructor(
@@ -14,8 +14,8 @@ export class GrocerySuccessPage implements OnInit {
 
   ngOnInit() { }
   orderStatus() {
-    localStorage.removeItem('store-detail')
+    localStorage.removeItem('store-detail');
     this.modalController.dismiss();
-    this.nav.navigateRoot("grocery-status");
+    this.nav.navigateRoot('grocery-status');
   }
 }

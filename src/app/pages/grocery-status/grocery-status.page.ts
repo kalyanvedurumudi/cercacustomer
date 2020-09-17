@@ -59,7 +59,7 @@ export class GroceryStatusPage implements OnInit {
       if (this.data.order_status == "Delivered") {
         clearInterval(this.get_duration_interval);
       } else {
-        this.getlocation();
+        // this.getlocation();
       }
     }, this.api.request_duration);
   }
