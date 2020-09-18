@@ -80,10 +80,15 @@ export class PayMethodPage implements OnInit {
     if (this.apdata && this.apdata.products.length) {
       this.updateTotalPrice();
       this.apdata.products.forEach(product => {
-        product.isPickUpAtStore = true;
-        product.userPickUpInfo = {
-          pickUpBy: 'self'
-        };
+        if (this.cartData.delivery_type !== 'delivery') {
+          product.isPickUpAtStore = true;
+          product.userPickUpInfo = {
+            pickUpBy: 'self'
+          };
+        } else {
+          product.isPickUpAtStore = false;
+          product.userPickUpInfo = {};
+        }
       });
     }
     this.userInfo.userCurrency = this.apdata && this.apdata.userCurrency ? this.apdata.userCurrency : 'USD';

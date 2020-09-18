@@ -1,4 +1,4 @@
-<div class="modal-header">
+<!-- <div class="modal-header">
   <h4 class="modal-title" translate>Verify your phone number</h4>
   <button type="button" class="close" aria-label="Close" (click)="modalController.dismiss('Cancel')">
     <span aria-hidden="true">&times;</span>
@@ -10,4 +10,39 @@
   <button class="btn btn-success" (click)="confirm()" translate>Confirm</button>&nbsp;
   <button class="btn btn-warning" (click)="modalController.dismiss('Cancel')" translate>Cancel</button>&nbsp;
   <button class="btn btn-info" (click)="reSendVerifyNumber()" translate>Resend Code</button>
-</div>
+</div> -->
+
+<ion-header no-border>
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start" (click)="modalController.dismiss('Cancel')">
+      <ion-button>
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title translate="">Verify phone number</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="main-container ion-padding">
+    <div class="choose-address-title ion-text-center">
+
+      <input type="text" [(ngModel)]="verifyCode" name="verifyCode" placeholder="Enter your code"
+      class="form-control" />
+      <p class="help help-block" translate>A verify code has been sent to your phone number. Please enter it exactly to
+        the box.</p>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-button class="otp_btn" color="primary" (click)="confirm()" mode="md" expand="block" fill="solid" translate>
+    Confirm
+  </ion-button>
+  <ion-button class="otp_btn" color="medium" (click)="modalController.dismiss('Cancel')" mode="md" expand="block" fill="solid"
+    translate>
+    Cancel
+  </ion-button>
+  <ion-button class="otp_btn" color="light" (click)="reSendVerifyNumber()" mode="md" expand="block" fill="solid" translate>
+    Resend Code
+  </ion-button>
+</ion-footer>

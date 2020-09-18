@@ -1,13 +1,13 @@
-import { GroceryService } from "./../../service/grocery.service";
-import { UtilService } from "./../../service/util.service";
-import { ApiService } from "./../../service/api.service";
-import { NavController } from "@ionic/angular";
-import { Component, OnInit } from "@angular/core";
+import { GroceryService } from './../../service/grocery.service';
+import { UtilService } from './../../service/util.service';
+import { ApiService } from './../../service/api.service';
+import { NavController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: "app-grocery-status",
-  templateUrl: "./grocery-status.page.html",
-  styleUrls: ["./grocery-status.page.scss"],
+  selector: 'app-grocery-status',
+  templateUrl: './grocery-status.page.html',
+  styleUrls: ['./grocery-status.page.scss'],
 })
 export class GroceryStatusPage implements OnInit {
   status: any;
@@ -21,30 +21,30 @@ export class GroceryStatusPage implements OnInit {
   ) {
     this.util.startLoad();
     this.api
-      .getDataWithToken("trackGroceryOrder/" + this.gpi.orderId)
+      .getDataWithToken('trackGroceryOrder/' + this.gpi.orderId)
       .subscribe(
         (res: any) => {
           if (res.success) {
             this.data = res.data;
             this.util.dismissLoader();
             if (
-              this.data.order_status == "Pending" ||
-              this.data.order_status == "Approved"
+              this.data.order_status === 'Pending' ||
+              this.data.order_status === 'Approved'
             ) {
               this.status = 0;
-            } else if (this.data.order_status == "DriverApproved") {
+            } else if (this.data.order_status === 'DriverApproved') {
               this.status = 1;
             } else if (
-              this.data.order_status == "OrderReady" ||
-              this.data.order_status == "PickUpGrocery"
+              this.data.order_status === 'OrderReady' ||
+              this.data.order_status === 'PickUpGrocery'
             ) {
               this.status = 2;
-            } else if (this.data.order_status == "OutOfDelivery") {
+            } else if (this.data.order_status === 'OutOfDelivery') {
               this.status = 3;
-            } else if (this.data.order_status == "DriverReach") {
+            } else if (this.data.order_status === 'DriverReach') {
               this.status = 4;
             } else {
-              if (this.data.order_status != "Cancel") {
+              if (this.data.order_status !== 'Cancel') {
                 this.status = 5;
               }
             }
@@ -52,11 +52,11 @@ export class GroceryStatusPage implements OnInit {
         },
         (err) => {
           this.util.dismissLoader();
-          this.util.presentToast("something went wrong");
+          this.util.presentToast('something went wrong');
         }
       );
     this.get_duration_interval = setInterval((interval) => {
-      if (this.data.order_status == "Delivered") {
+      if (this.data.order_status === 'Delivered') {
         clearInterval(this.get_duration_interval);
       } else {
         // this.getlocation();
@@ -66,34 +66,34 @@ export class GroceryStatusPage implements OnInit {
 
   ngOnInit() {}
   orderStatus() {
-    this.nav.navigateForward("grocery-order-detail");
+    this.nav.navigateForward('grocery-order-detail');
   }
 
   getlocation() {
     this.api
-      .getDataWithToken("trackGroceryOrder/" + this.gpi.orderId)
+      .getDataWithToken('trackGroceryOrder/' + this.gpi.orderId)
       .subscribe(
         (res: any) => {
           if (res.success) {
             this.data = res.data;
             if (
-              this.data.order_status == "Pending" ||
-              this.data.order_status == "Approved"
+              this.data.order_status === 'Pending' ||
+              this.data.order_status === 'Approved'
             ) {
               this.status = 0;
-            } else if (this.data.order_status == "DriverApproved") {
+            } else if (this.data.order_status === 'DriverApproved') {
               this.status = 1;
             } else if (
-              this.data.order_status == "OrderReady" ||
-              this.data.order_status == "PickUpGrocery"
+              this.data.order_status === 'OrderReady' ||
+              this.data.order_status === 'PickUpGrocery'
             ) {
               this.status = 2;
-            } else if (this.data.order_status == "OutOfDelivery") {
+            } else if (this.data.order_status === 'OutOfDelivery') {
               this.status = 3;
-            } else if (this.data.order_status == "DriverReach") {
+            } else if (this.data.order_status === 'DriverReach') {
               this.status = 4;
             } else {
-              if (this.data.order_status == "Delivered") {
+              if (this.data.order_status === 'Delivered') {
                 this.status = 5;
               }
             }
@@ -101,7 +101,7 @@ export class GroceryStatusPage implements OnInit {
         },
         (err) => {
           this.util.dismissLoader();
-          this.util.presentToast("something went wrong");
+          this.util.presentToast('something went wrong');
         }
       );
   }
