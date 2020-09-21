@@ -353,6 +353,8 @@ export class GroceryCartPage implements OnInit {
           lng: parseFloat(result[0].longitude),
         };
       })
-      .catch((error: any) => console.log(error));
+      .catch((error: any) => {
+        console.log(error);
+      });
   }
 }

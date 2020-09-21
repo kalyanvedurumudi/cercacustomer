@@ -181,7 +181,7 @@ export class PayMethodPage implements OnInit {
 
     }).subscribe((resp) => {
         if (resp && resp.code === 200) {
-          this.gpi.cleanCart();
+          this.gpi.cleanCart(resp);
           this.presentModal();
         }
         // else if (this.userInfo.paymentMethod === 'paypal') {

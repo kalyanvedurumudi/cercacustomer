@@ -79,7 +79,7 @@ export class OrderDetailPage implements OnInit {
     //   .postDataWithToken('addItemReview', this.itemReview)
     //   .subscribe((res: any) => {
     //     if (res.success) {
-    //       this.translate.get('toasts').subscribe(async val => {  
+    //       this.translate.get('toasts').subscribe(async val => {
     //         this.util.presentToast(val.review_add_success);
     //       })
     //       this.data.review_status = 1;

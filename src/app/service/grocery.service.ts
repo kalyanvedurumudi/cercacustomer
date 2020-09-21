@@ -14,6 +14,7 @@ export class GroceryService {
   cartData: any = [];
   promocode: any;
   info: any;
+  lastOrder: any;
   constructor(private api: ApiService) {}
 
   checkPhone(phoneNumber: string): Observable<any> {
@@ -24,7 +25,8 @@ export class GroceryService {
     return this.api.postDataWithToken('orders', params);
   }
 
-  cleanCart(): void {
+  cleanCart(res: any): void {
+    this.lastOrder = res;
     this.info = [];
     localStorage.setItem('store-detail', JSON.stringify([]));
   }
